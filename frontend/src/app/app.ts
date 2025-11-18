@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PartialRoute } from './shared/models/routes.model';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class App {
   protected title = 'desafio-frontend';
+
+  public routes :PartialRoute[] =  [
+    { path: '', label: 'Home' },
+    { path: 'beneficiarios', label: 'Beneficiários' },
+    { path: 'planos', label: 'Planos' }
+  ];
 }
