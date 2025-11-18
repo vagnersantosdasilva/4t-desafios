@@ -7,6 +7,7 @@ import { Header } from './shared/components/header/header';
 import { HomePage } from './pages/home-page/home-page';
 import { BeneficiariosPage } from './pages/beneficiarios-page/beneficiarios-page';
 import { PlanosPage } from './pages/planos-page/planos-page';
+import { Page } from './shared/components/page/page';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PlanosPage } from './pages/planos-page/planos-page';
     Header,
     HomePage,
     BeneficiariosPage,
-    PlanosPage
+    PlanosPage,
+    Page
   ],
   imports: [
     BrowserModule,
