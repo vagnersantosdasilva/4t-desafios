@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+/*=========================================================*/
+/* 1. CONFIGURAÇÃO DE VARIÁVEIS BOOTSTRAP */
+/* ========================================================= */
+
+// 1.1 IMPORTAR FUNÇÕES E MIXINS BASE DO BOOTSTRAP
+
+
+// 1.2 IMPORTAR  VARIÁVEIS CUSTOMIZADAS
+@use 'variables' as *;
+
+
+// 1.3 OVERRIDE DE VARIÁVEIS DO BOOTSTRAP
+
+$body-bg: $bg-dark;
+$body-color: $text-color-light;
+
+
+
+/* ========================================================= */
+/* 2. IMPORTAR O CORE DO BOOTSTRAP */
+/* ========================================================= */
+
+// 2.1 IMPORTAR O RESTANTE DO BOOTSTRAP
+//@import "bootstrap/scss/bootstrap";
+
+
+/* ========================================================= */
+/* 3. ESTILOS CUSTOMIZADOS ADICIONAIS */
+/* ========================================================= */
+@use 'reset' as *;
+
+
+body {
+  background-color: $bg-dark;
+  color: $text-color-light;
+  font-family: 'Poppins', sans-serif;
+}
+
+body.sidebar-open {
+  overflow: hidden !important;
+}
