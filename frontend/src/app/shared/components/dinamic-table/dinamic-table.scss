@@ -1,0 +1,14 @@
+.card {
+  height: calc(100vh - 19rem);
+
+}
+.table {
+  // Remova a largura fixa de 1000px
+  width: 100%; /* Isso fará com que a tabela ocupe toda a largura da div pai */
+  //table-layout: auto; /* Permite que a tabela ajuste suas colunas automaticamente */
+  overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
+}
+
+.table tbody tr{
+  cursor: pointer;
+}

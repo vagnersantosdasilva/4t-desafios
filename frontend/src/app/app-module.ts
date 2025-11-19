@@ -8,6 +8,7 @@ import { HomePage } from './pages/home-page/home-page';
 import { BeneficiariosPage } from './pages/beneficiarios-page/beneficiarios-page';
 import { PlanosPage } from './pages/planos-page/planos-page';
 import { Page } from './shared/components/page/page';
+import { DinamicTable } from './shared/components/dinamic-table/dinamic-table';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { Page } from './shared/components/page/page';
     HomePage,
     BeneficiariosPage,
     PlanosPage,
-    Page
+    Page,
+    DinamicTable
   ],
   imports: [
     BrowserModule,

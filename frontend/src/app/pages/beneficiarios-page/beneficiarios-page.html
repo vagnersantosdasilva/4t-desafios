@@ -1,3 +1,10 @@
 <app-page title="Beneficiários">
-  <p>Conteúdo da página de beneficiários.</p>
+  <app-dinamic-table
+    [tableHeaders]="beneficiarios.headers"
+    [tableData]="beneficiarios.data"
+    (editClicked)="editBeneficiario($event)"
+    (removeClicked)="removeBeneficiario($event)"
+    (newRowClicked)="newBeneficiario()"
+  >
+  </app-dinamic-table>
 </app-page>
