@@ -4,7 +4,14 @@
     [tableData]="beneficiarios.data"
     (editClicked)="editBeneficiario($event)"
     (removeClicked)="removeBeneficiario($event)"
-    (newRowClicked)="newBeneficiario()"
+    (buttonActionClicked)="newBeneficiario()"
+    buttonActionLabel="Adicionar"
+    [selectPrimaryControlOptions]="planosSelectOptions"
+    [selectSecondaryControlOptions]="statusSelectOptions"
+    primarySelectLabel="Filtrar por Plano"
+    secondarySelectLabel="Filtrar por Status"
+    (selectPrimaryChanged)="filterPlano($event)"
+    (selectSecondaryChanged)="filterStatus($event)"
   >
   </app-dinamic-table>
 </app-page>

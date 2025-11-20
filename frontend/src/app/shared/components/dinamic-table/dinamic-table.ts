@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TableColumn, TableDataRow } from '../../models/table.model';
+import { SelectOption, TableColumn, TableDataRow } from '../../models/table.model';
 
 @Component({
   selector: 'app-dinamic-table',
@@ -10,18 +10,18 @@ import { TableColumn, TableDataRow } from '../../models/table.model';
 export class DinamicTable {
   @Input() tableHeaders: TableColumn[] = [];
   @Input() tableData: TableDataRow[] = [];
+  @Input() selectPrimaryControlOptions:SelectOption[] | undefined = undefined;
+  @Input() selectSecondaryControlOptions:SelectOption[] | undefined = undefined;
+  @Input() buttonActionLabel:string = '';
+  @Input() primarySelectLabel: string ='';
+  @Input() secondarySelectLabel: string ='';
 
   @Output() editClicked = new EventEmitter<TableDataRow>();
   @Output() removeClicked = new EventEmitter<TableDataRow>();
-  @Output() newRowClicked = new EventEmitter<void>();
+  @Output() selectPrimaryChanged = new EventEmitter<string | number>();
+  @Output() selectSecondaryChanged = new EventEmitter<string | number>();
+  @Output() buttonActionClicked = new EventEmitter<void>();
 
-  public rowClick(row: TableDataRow | undefined): void {
-    if (row) {
-      console.log('Row clicked:', row);
-      //this.rowClicked.emit(row);
-    }
-
-  }
 
   public rowEdit(row:TableDataRow):void {
     this.editClicked.emit(row);
@@ -31,7 +31,15 @@ export class DinamicTable {
     this.removeClicked.emit(row);
   }
 
-  public newRow():void{
-    this.newRowClicked.emit();
+  public primarySelectChange(option: string | number): void {
+    this.selectPrimaryChanged.emit(option);
+  }
+
+  public secondarySelectChange(option: string | number): void {
+    this.selectSecondaryChanged.emit(option);
+  }
+
+  public buttonAction(): void {
+    this.buttonActionClicked.emit();
   }
 }

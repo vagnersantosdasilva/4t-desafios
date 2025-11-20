@@ -1,0 +1,52 @@
+<div class="card bg-dark text-white">
+  <div class="card-body">
+    <div class="left">
+      @if(buttonControlLabel){
+      <div>
+        <button class="btn btn-primary mt-1 mb-1" (click)="buttonControlAction()">{{buttonControlLabel}}
+        </button>
+      </div>
+      }
+
+    </div>
+
+    <div class="center">
+
+    </div>
+
+    <div class="right">
+      @if(primarySelectOptions || secondSelectOptions){
+      <div>Filtrar: </div>
+      }
+      <div class="form-group">
+        @if(primarySelectOptions){
+        <select class="form-control" (change)="primarySelectChange($event)">
+          <option value="" disabled selected >
+            {{primarySelectLabel}}
+          </option>
+          @for (option of primarySelectOptions; track option.id){
+          <option [value]="option.value" [selected]="option.selected" [id]="option.id">{{option.label}}
+          </option>
+          }
+        </select>
+        }
+
+      </div>
+
+      <div class="form-group">
+        @if(secondSelectOptions){
+        <select class="form-control" (change)="secondSelectChange($event)">
+          <option value="" disabled selected >
+            {{secondSelectLabel}}
+          </option>
+          @for (option of secondSelectOptions; track option.id){
+          <option [value]="option.value" [selected]="option.selected" [id]="option.id">{{option.label}}
+          </option>
+          }
+        </select>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

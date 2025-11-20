@@ -1,0 +1,77 @@
+@use 'variables' as *;
+
+:host {
+  margin: 0;
+
+  width: 100%;
+
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-md;
+  }
+
+  .left,
+  .right,
+  .center {
+
+    display: flex;
+    align-items: center;
+    gap: $space-md; // ou $space-md
+  }
+
+  .right {
+    gap: $space-sm;
+  }
+
+  .left>*,
+  .right>* .center>* {
+    margin: 0;
+  }
+
+  .btn-group .btn {
+    display: flex;
+    align-items: baseline;
+    height: 38px;
+    gap: $space-sm;
+    border-radius: 0;
+  }
+
+  select,
+  input {
+    border-radius: 0;
+    width: 100%;
+    min-width: 10rem;
+  }
+
+  .form-group {
+    margin: 0;
+  }
+
+
+
+  @media screen and (max-width: 1366px) {
+
+    .left,
+    .right,
+    .center {
+      gap: $space-xs; // ou $space-md
+    }
+
+    .left>*,
+    .right>*,
+    .center>* {
+      margin: 0;
+    }
+
+    .btn-group .btn {
+      display: flex;
+      align-items: baseline;
+      height: 38px;
+      gap: $space-xs;
+      border-radius: 0;
+      font-size: 1px;
+    }
+  }
+}

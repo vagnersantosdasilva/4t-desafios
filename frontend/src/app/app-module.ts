@@ -9,6 +9,9 @@ import { BeneficiariosPage } from './pages/beneficiarios-page/beneficiarios-page
 import { PlanosPage } from './pages/planos-page/planos-page';
 import { Page } from './shared/components/page/page';
 import { DinamicTable } from './shared/components/dinamic-table/dinamic-table';
+import { HttpClientModule } from '@angular/common/http';
+import { ControlTable } from './shared/components/control-table/control-table';
+
 
 @NgModule({
   declarations: [
@@ -18,11 +21,13 @@ import { DinamicTable } from './shared/components/dinamic-table/dinamic-table';
     BeneficiariosPage,
     PlanosPage,
     Page,
-    DinamicTable
+    DinamicTable,
+    ControlTable
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

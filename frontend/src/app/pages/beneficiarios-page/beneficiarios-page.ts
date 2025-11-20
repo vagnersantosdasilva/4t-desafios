@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { TableColumn, TableDataRow } from '../../shared/models/table.model';
+import { Component, inject, OnInit } from '@angular/core';
+import { SelectOption, TableColumn, TableDataRow } from '../../shared/models/table.model';
+import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
+import { PlanosService } from '../../services/planos/planos';
+import { BeneficiarioArgs } from '../../model/api.model';
 
 @Component({
   selector: 'app-beneficiarios-page',
@@ -7,60 +10,48 @@ import { TableColumn, TableDataRow } from '../../shared/models/table.model';
   templateUrl: './beneficiarios-page.html',
   styleUrl: './beneficiarios-page.scss',
 })
-export class BeneficiariosPage {
+export class BeneficiariosPage implements OnInit {
 
   public beneficiarios: { headers: TableColumn[]; data: TableDataRow[] };
+  public planosSelectOptions :SelectOption[] = [];
+  public statusSelectOptions :SelectOption[] = [
+    { id: 1, value: 'TODOS', label: 'Todos' },
+    { id: 2, value: 'ATIVO', label: 'Ativo' },
+    { id: 3, value: 'INATIVO', label: 'Inativo' },
+  ];
+  private beneficiariosService = inject(BeneficiariosService);
+  private planosService = inject(PlanosService);
+  private beneficiariosArgs: BeneficiarioArgs = {}
   constructor() {
-    // Definição dos cabeçalhos
+    this.beneficiarios = { headers: [], data: [] };
+  }
 
-    const tableHeaders: TableColumn[] = [
-      { header: 'ID', field: 'id', width: '50px' },
+  ngOnInit(): void {
+
+    this.beneficiarios.headers = [
+      { header: 'ID', field: 'id', isSortable: true },
       { header: 'Nome Completo', field: 'nome_completo', isSortable: true },
       { header: 'CPF', field: 'cpf' },
       { header: 'Data Nasc.', field: 'data_nascimento', pipe: 'date', format: 'dd/MM/yyyy' },
       { header: 'Status', field: 'status' },
-      { header: 'Plano ID', field: 'plano_id' },
+      { header: 'Plano', field: 'plano', isSortable: true },
       { header: 'Data Cadastro', field: 'data_cadastro', pipe: 'date', format: 'dd/MM/yyyy HH:mm' }
     ];
+    this.beneficiarios.data = [];
+    this.loadBeneficiarios();
 
-    const mappedData: TableDataRow[] = [
-      {
-        "id": 1,
-        "nome_completo": "João Pereira",
-        "cpf": "11144477735",
-        "data_nascimento": "1988-01-10",
-        "status": "ATIVO",
-        "plano_id": 2,
-        "data_cadastro": "2025-01-10T10:30:00Z"
-      },
-      {
-        "id": 2,
-        "nome_completo": "Ana Souza",
-        "cpf": "98765432100",
-        "data_nascimento": "1995-09-03",
-        "status": "ATIVO",
-        "plano_id": 1,
-        "data_cadastro": "2025-02-15T11:00:00Z"
-      },
-      {
-        "id": 3,
-        "nome_completo": "Maria Santos",
-        "cpf": "10987654321",
-        "data_nascimento": "1992-07-22",
-        "status": "INATIVO",
-        "plano_id": 3,
-        "data_cadastro": "2025-03-20T12:45:00Z"
-      }
-    ]
-
-    this.beneficiarios = {
-      headers: tableHeaders,
-      data: mappedData
-    };
+    this.planosService.getPlanos().subscribe((planos) => {
+      this.planosSelectOptions = planos.map((plano) => ({
+        id: plano.id,
+        value: plano.id,
+        label: plano.nome
+      }));
+    });
   }
 
   public editBeneficiario(row: TableDataRow): void {
     console.log('Edit beneficiary:', row);
+
   }
 
   public removeBeneficiario(row: TableDataRow): void {
@@ -69,5 +60,43 @@ export class BeneficiariosPage {
 
   public newBeneficiario(): void {
     console.log('Add new beneficiary');
+  }
+
+  public filterPlano(option: number|string): void {
+    console.log('Filter by plan:', option);
+    this.beneficiariosArgs.plano_id = option as number;
+    this.loadBeneficiarios();
+  }
+
+  public filterStatus(option: number|string): void {
+    console.log('Filter by status:', option);
+    if(option === 'TODOS'){
+      delete this.beneficiariosArgs.status;
+    }else{
+      this.beneficiariosArgs.status = option as 'ATIVO' | 'INATIVO';
+    }
+    this.loadBeneficiarios();
+  }
+
+  private loadBeneficiarios(): void {
+
+    this.beneficiariosService.getBeneficiarios(this.beneficiariosArgs).subscribe({
+      next: (beneficiarios) => {
+        this.beneficiarios.data = beneficiarios.map(beneficiario => ({
+          id: beneficiario.id,
+          nome_completo: beneficiario.nome_completo,
+          cpf: beneficiario.cpf,
+          data_nascimento: beneficiario.data_nascimento,
+          status: beneficiario.status,
+          plano: beneficiario.plano.nome,
+          data_cadastro: beneficiario.data_cadastro
+        }));
+
+      },
+      error: (error) => {
+        console.error('Erro ao carregar beneficiários:', error);
+        // Aqui você pode adicionar tratamento de erro (ex: mostrar mensagem para o usuário)
+      }
+    });
   }
 }

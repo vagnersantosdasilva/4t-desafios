@@ -1,3 +1,5 @@
+import { Plano } from "../../model/api.model";
+
 export interface TableColumn {
   header: string;
   field: string;
@@ -9,10 +11,18 @@ export interface TableColumn {
 
 //TODO:Decidir se deixo qualquer chave/valor o retorno tipado
 export interface TableDataRow {
-  [key: string]: any;
+  [key: string]: any ;
 }
 
 export interface TableModel {
   headers: TableColumn[];
   data: TableDataRow[];
+}
+
+export interface SelectOption {
+  id: number | string;
+  value: string | number;
+  label: string;
+  selected?: boolean;
+  disabled?: boolean;
 }

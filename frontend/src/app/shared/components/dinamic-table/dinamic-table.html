@@ -1,48 +1,61 @@
 <div>
-  <div class="row ">
-    <button class="btn btn-primary mt-1 mb-1" (click)="newRow()">Adicionar</button>
-  </div>
-  <div class="row ">
-    <div class="card bg-dark text-white">
-      <table class="table table-hover table-dark mt-3 ">
-        <thead>
-          <tr>
-            @for(col of tableHeaders; track $index) {
-            <th scope="col">{{ col.header }}</th>
-            }@empty {
-            <th scope="col">#</th>
-            }
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
+  <app-control-table
+    class="mb-1"
+    buttonControlLabel="Adicionar"
+    (buttonControlActionClicked)="buttonAction()"
+    [primarySelectOptions]="selectPrimaryControlOptions"
+    [secondSelectOptions]="selectSecondaryControlOptions"
+    (primarySelectChanged)="primarySelectChange($event)"
+    (secondSelectChanged)="secondarySelectChange($event)"
+    [primarySelectLabel]="primarySelectLabel"
+    [secondSelectLabel]="secondarySelectLabel"
 
-        <tbody>
-          @for(row of tableData; track $index) {
-          <tr>
-            @for(col of tableHeaders; track col.field) {
-            <td>
-              @if (col.pipe === 'date' && col.format) {
-              {{ row[col.field] | date: col.format }}
-              } @else {
-              {{ row[col.field] }}
+  ></app-control-table>
+
+  <div>
+    <div class="card bg-dark text-white mt-1">
+      <div class="card-body">
+        <table class="table table-hover table-dark mt-3">
+          <thead>
+            <tr>
+              @for(col of tableHeaders; track $index) {
+              <th scope="col">{{ col.header }}</th>
+              }@empty {
+              <th scope="col">#</th>
               }
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
 
-            </td>
+          <tbody>
+            @for(row of tableData; track $index) {
+            <tr>
+              @for(col of tableHeaders; track col.field) {
+              <td class="align-middle">
+                @if (col.pipe === 'date' && col.format) {
+                {{ row[col.field] | date: col.format }}
+                } @else {
+                {{ row[col.field] }}
+                }
+
+              </td>
+              }
+              <td class="align-middle"><button class="btn btn-success" (click)="rowEdit(row)">Editar</button></td>
+              <td class="align-middle"><button class="btn btn-danger" (click)="rowRemove(row)">Remover</button></td>
+            </tr>
+            }@empty {
+            <tr>
+              <td [attr.colspan]="tableHeaders.length || 1" class="text-center p-4 text-white">
+                Não há dados disponíveis para esta visualização.
+              </td>
+            </tr>
             }
-            <td><button class="btn btn-success" (click)="rowEdit(row)">Editar</button></td>
-            <td><button class="btn btn-danger" (click)="rowRemove(row)">Remover</button></td>
-          </tr>
-          }@empty {
-          <tr>
-            <td [attr.colspan]="tableHeaders.length || 1" class="text-center p-4 text-white">
-              Não há dados disponíveis para esta visualização.
-            </td>
-          </tr>
-          }
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
