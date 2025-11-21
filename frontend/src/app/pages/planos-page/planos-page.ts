@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TableColumn, TableDataRow } from '../../shared/models/table.model';
 import { PlanosService } from '../../services/planos/planos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-planos-page',
@@ -13,6 +14,7 @@ export class PlanosPage implements OnInit {
 
   public planosTable: { headers: TableColumn[]; data: TableDataRow[] } = { headers: [], data: [] }  ;
   private planosService = inject(PlanosService);
+  private router = inject(Router);
 
   ngOnInit(): void {
      this.planosTable.headers = [
@@ -31,15 +33,15 @@ export class PlanosPage implements OnInit {
   }
 
   public editPlano(row: TableDataRow): void {
-    console.log('Edit plan:', row);
+    this.router.navigate(['/planos/editar', row['id']]);
   }
 
   public removePlano(row: TableDataRow): void {
-    console.log('Remove plan:', row);
+    console.log('Remove plan:', row['id']);
   }
 
   public newPlano(): void {
-    console.log('New plan action triggered');
+    this.router.navigate(['/planos/novo']);
   }
 
 }

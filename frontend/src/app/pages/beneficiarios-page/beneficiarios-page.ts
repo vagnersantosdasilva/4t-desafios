@@ -3,6 +3,7 @@ import { SelectOption, TableColumn, TableDataRow } from '../../shared/models/tab
 import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
 import { PlanosService } from '../../services/planos/planos';
 import { BeneficiarioArgs } from '../../model/api.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-beneficiarios-page',
@@ -21,6 +22,7 @@ export class BeneficiariosPage implements OnInit {
   ];
   private beneficiariosService = inject(BeneficiariosService);
   private planosService = inject(PlanosService);
+  private router = inject(Router);
   private beneficiariosArgs: BeneficiarioArgs = {}
   constructor() {
     this.beneficiarios = { headers: [], data: [] };
@@ -51,15 +53,16 @@ export class BeneficiariosPage implements OnInit {
 
   public editBeneficiario(row: TableDataRow): void {
     console.log('Edit beneficiary:', row);
-
+    this.router.navigate(['/beneficiarios/editar', row['id']]);
   }
 
   public removeBeneficiario(row: TableDataRow): void {
-    console.log('Remove beneficiary:', row);
+    console.log('Remove beneficiary:', row['id']);
   }
 
   public newBeneficiario(): void {
     console.log('Add new beneficiary');
+    this.router.navigate(['/beneficiarios/novo']);
   }
 
   public filterPlano(option: number|string): void {

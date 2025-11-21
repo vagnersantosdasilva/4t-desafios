@@ -11,6 +11,8 @@ import { Page } from './shared/components/page/page';
 import { DinamicTable } from './shared/components/dinamic-table/dinamic-table';
 import { HttpClientModule } from '@angular/common/http';
 import { ControlTable } from './shared/components/control-table/control-table';
+import { BeneficiariosFormPage } from './pages/beneficiarios-form-page/beneficiarios-form-page';
+import { PlanosFormPage } from './pages/planos-form-page/planos-form-page';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { ControlTable } from './shared/components/control-table/control-table';
     PlanosPage,
     Page,
     DinamicTable,
-    ControlTable
+    ControlTable,
+    BeneficiariosFormPage,
+    PlanosFormPage
   ],
   imports: [
     BrowserModule,
