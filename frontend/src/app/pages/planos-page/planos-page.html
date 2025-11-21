@@ -1,3 +1,11 @@
 <app-page title="Nossos Planos">
-  <p>Bem-vindo à página inicial!</p>
+    <app-dinamic-table
+    [tableHeaders]="planosTable.headers"
+    [tableData]="planosTable.data"
+    (editClicked)="editPlano($event)"
+    (removeClicked)="removePlano($event)"
+    (buttonActionClicked)="newPlano()"
+    buttonActionLabel="Adicionar"
+  >
+  </app-dinamic-table>
 </app-page>
