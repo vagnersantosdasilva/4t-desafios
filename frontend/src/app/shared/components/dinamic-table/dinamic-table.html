@@ -1,7 +1,7 @@
 <div>
   <app-control-table
     class="mb-1"
-    buttonControlLabel="Adicionar"
+    [buttonControlLabel]="buttonActionLabel"
     (buttonControlActionClicked)="buttonAction()"
     [primarySelectOptions]="selectPrimaryControlOptions"
     [secondSelectOptions]="selectSecondaryControlOptions"
@@ -47,7 +47,7 @@
             }@empty {
             <tr>
               <td [attr.colspan]="tableHeaders.length || 1" class="text-center p-4 text-white">
-                Não há dados disponíveis para esta visualização.
+                {{messageEmptyTable}}
               </td>
             </tr>
             }

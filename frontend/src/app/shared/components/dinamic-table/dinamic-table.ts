@@ -12,9 +12,10 @@ export class DinamicTable {
   @Input() tableData: TableDataRow[] = [];
   @Input() selectPrimaryControlOptions:SelectOption[] | undefined = undefined;
   @Input() selectSecondaryControlOptions:SelectOption[] | undefined = undefined;
-  @Input() buttonActionLabel:string = '';
+  @Input() buttonActionLabel:string = 'Adicionar';
   @Input() primarySelectLabel: string ='';
   @Input() secondarySelectLabel: string ='';
+  @Input() messageEmptyTable: string = 'Não há dados disponíveis para esta visualização.';
 
   @Output() editClicked = new EventEmitter<TableDataRow>();
   @Output() removeClicked = new EventEmitter<TableDataRow>();

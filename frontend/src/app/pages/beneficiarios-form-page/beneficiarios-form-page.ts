@@ -18,8 +18,5 @@ export class BeneficiariosFormPage implements OnInit{
     if (this.id) {
       this.titleForm = 'Editar Beneficiário';
     }
-    console.log('BeneficiariosFormPage initialized with id:', this.id);
   }
-
-
 }
