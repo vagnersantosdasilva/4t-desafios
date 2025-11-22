@@ -1,0 +1,44 @@
+// modal-dialog.component.scss
+@use "sass:color";
+@use 'variables' as *;
+
+.modal-content {
+  border-radius: $radius-lg;
+  border: none;
+  box-shadow: $shadow-lg;
+}
+
+.modal-header {
+  border-bottom: 1px solid color.scale($bg-card, $lightness: 10%);
+  padding: $space-lg $space-xl;
+}
+
+.modal-body {
+  padding: $space-xl;
+  font-size: $font-size-base;
+}
+
+.modal-footer {
+  border-top: 1px solid color.scale($bg-card, $lightness: 10%);
+  padding: $space-lg $space-xl;
+  gap: $space-md;
+}
+
+.btn {
+  border-radius: $radius-md;
+  padding: $space-sm $space-lg;
+  font-weight: 500;
+  transition: $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}

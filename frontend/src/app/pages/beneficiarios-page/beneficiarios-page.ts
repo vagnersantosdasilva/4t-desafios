@@ -20,6 +20,9 @@ export class BeneficiariosPage implements OnInit {
     { id: 2, value: 'ATIVO', label: 'Ativo' },
     { id: 3, value: 'INATIVO', label: 'Inativo' },
   ];
+  public dialogVisible: boolean = false;
+
+  private beneficiarioSelected: TableDataRow | null = null;
   private beneficiariosService = inject(BeneficiariosService);
   private planosService = inject(PlanosService);
   private router = inject(Router);
@@ -58,6 +61,8 @@ export class BeneficiariosPage implements OnInit {
 
   public removeBeneficiario(row: TableDataRow): void {
     console.log('Remove beneficiary:', row['id']);
+    this.dialogVisible = true;
+    this.beneficiarioSelected = row;
   }
 
   public newBeneficiario(): void {
@@ -101,5 +106,24 @@ export class BeneficiariosPage implements OnInit {
         // Aqui você pode adicionar tratamento de erro (ex: mostrar mensagem para o usuário)
       }
     });
+  }
+
+  public confirmRemoveBeneficiario(): void {
+    // Lógica para confirmar a remoção do beneficiário
+    if (this.beneficiarioSelected !=null) {
+      this.beneficiariosService.deleteBeneficiario(this.beneficiarioSelected['id'] as number).subscribe({
+        next: () => {
+          console.log('Beneficiário removido com sucesso.');
+          this.loadBeneficiarios();
+        }
+      });
+    };
+
+    this.dialogVisible = false;
+  }
+
+  public cancelRemoveBeneficiario(): void {
+    // Lógica para cancelar a remoção do beneficiário
+    this.dialogVisible = false;
   }
 }

@@ -1,0 +1,26 @@
+<!-- modal-dialog.component.html -->
+<div class="modal fade" [class.show]="visible" [style.display]="visible ? 'block' : 'none'" tabindex="-1"
+  aria-labelledby="confirmationModalLabel" aria-hidden="!visible">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-white bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">{{ dialogTitle }}</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="onSecondaryButtonClick()"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onSecondaryButtonClick()">
+          {{ secondaryButtonLabel }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onPrimaryButtonClick()">
+          {{ primaryButtonLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="visible"></div>

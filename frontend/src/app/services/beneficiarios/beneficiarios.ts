@@ -26,4 +26,16 @@ export class BeneficiariosService {
     }
     return this.httpCliente.get<BeneficiarioExpanded[]>(`${this.api}/beneficiarios?_expand=plano`, { params });
   }
+
+  public saveBeneficiario(beneficiario: Beneficiario):Observable<Beneficiario> {
+    return this.httpCliente.post<Beneficiario>(`${this.api}/beneficiarios`, beneficiario);
+  }
+
+  public updateBeneficiario(beneficiario: Beneficiario):Observable<Beneficiario> {
+    return this.httpCliente.put<Beneficiario>(`${this.api}/beneficiarios/${beneficiario.id}`, beneficiario);
+  }
+
+  public deleteBeneficiario(id:number):Observable<void> {
+    return this.httpCliente.delete<void>(`${this.api}/beneficiarios/${id}`);
+  }
 }

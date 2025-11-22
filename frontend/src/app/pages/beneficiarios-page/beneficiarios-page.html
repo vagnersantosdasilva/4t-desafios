@@ -17,3 +17,13 @@
   >
   </app-dinamic-table>
 </app-page>
+<app-dialog
+  message="Tem certeza que deseja remover este beneficiário?"
+  primaryButtonLabel="Remover"
+  secondaryButtonLabel="Cancelar"
+  (primaryButtonCliked)="confirmRemoveBeneficiario()"
+  (secondaryButtonClicked)="cancelRemoveBeneficiario()"
+  [visible]="dialogVisible"
+  dialogTitle='Remoção de beneficiário'
+>
+</app-dialog>

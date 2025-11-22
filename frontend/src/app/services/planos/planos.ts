@@ -13,4 +13,16 @@ export class PlanosService {
   public getPlanos(): Observable<Plano[]> {
     return this.httpCliente.get<Plano[]>(`${this.api}/planos`);
   }
+
+  public savePlano(plano:Plano):Observable<Plano> {
+    return this.httpCliente.post<Plano>(`${this.api}/planos`, plano);
+  }
+
+  public updatePlano(plano:Plano):Observable<Plano> {
+    return this.httpCliente.put<Plano>(`${this.api}/planos/${plano.id}`, plano);
+  }
+
+  public deletePlano(id:number):Observable<void> {
+    return this.httpCliente.delete<void>(`${this.api}/planos/${id}`);
+  }
 }

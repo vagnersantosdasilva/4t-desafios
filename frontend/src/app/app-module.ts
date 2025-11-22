@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ControlTable } from './shared/components/control-table/control-table';
 import { BeneficiariosFormPage } from './pages/beneficiarios-form-page/beneficiarios-form-page';
 import { PlanosFormPage } from './pages/planos-form-page/planos-form-page';
+import { Dialog } from './shared/components/dialog/dialog';
+
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { PlanosFormPage } from './pages/planos-form-page/planos-form-page';
     DinamicTable,
     ControlTable,
     BeneficiariosFormPage,
-    PlanosFormPage
+    PlanosFormPage,
+    Dialog
   ],
   imports: [
     BrowserModule,
