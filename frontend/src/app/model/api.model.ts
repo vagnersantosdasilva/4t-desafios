@@ -5,7 +5,7 @@ export interface Plano {
 }
 
 export interface Beneficiario {
-  id: number;
+  id: number | null;
   nome_completo: string;
   cpf: string;
   data_nascimento: string;

@@ -38,4 +38,8 @@ export class BeneficiariosService {
   public deleteBeneficiario(id:number):Observable<void> {
     return this.httpCliente.delete<void>(`${this.api}/beneficiarios/${id}`);
   }
+
+  public getBeneficiariosById(id:number):Observable<Beneficiario> {
+    return this.httpCliente.get<Beneficiario>(`${this.api}/beneficiarios/${id}`);
+  }
 }

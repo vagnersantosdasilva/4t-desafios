@@ -14,6 +14,7 @@ import { ControlTable } from './shared/components/control-table/control-table';
 import { BeneficiariosFormPage } from './pages/beneficiarios-form-page/beneficiarios-form-page';
 import { PlanosFormPage } from './pages/planos-form-page/planos-form-page';
 import { Dialog } from './shared/components/dialog/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -29,12 +30,14 @@ import { Dialog } from './shared/components/dialog/dialog';
     ControlTable,
     BeneficiariosFormPage,
     PlanosFormPage,
-    Dialog
+    Dialog,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

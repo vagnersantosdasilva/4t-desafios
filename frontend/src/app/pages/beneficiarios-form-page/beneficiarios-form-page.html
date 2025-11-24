@@ -1,4 +1,94 @@
 <app-page [title]="titleForm">
-  <p>beneficiarios-form-page works!</p>
-</app-page>
+  <div class="card bg-dark">
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nomeCompleto">Nome Completo</label>
+          <input type="text" class="form-control"
+            [class.is-invalid]="form.get('nomeCompleto')?.touched && form.get('nomeCompleto')?.invalid"
+            id="nomeCompleto" formControlName="nomeCompleto" placeholder="Digite seu nome completo">
 
+          @if(form.get('nomeCompleto')?.touched && form.get('nomeCompleto')?.invalid){
+          <div class="invalid-feedback">
+            @if(form.get('nomeCompleto')?.errors?.['required']){
+            <div>
+              O nome completo é obrigatório.
+            </div>
+            }
+            @if(form.get('nomeCompleto')?.errors?.['minlength']){
+            <div>
+              O nome deve ter no mínimo {{ form.get('nomeCompleto')?.errors?.['minlength']?.requiredLength }}
+              caracteres.
+            </div>
+            }
+
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text" class="form-control" id="cpf" formControlName="cpf" placeholder="Digite seu CPF"
+            [class.is-invalid]="form.get('cpf')?.touched && form.get('cpf')?.invalid">
+          @if(form.get('cpf')?.touched && form.get('cpf')?.invalid){
+          <div class="invalid-feedback">
+            @if(form.get('cpf')?.errors?.['required']){
+            <div>
+              O CPF é obrigatório.
+            </div>
+            }
+            @if(form.get('cpf')?.errors?.['cpfInvalido']){
+            <div>
+              O CPF é inválido. ex:19218898310
+            </div>
+            }
+          </div>
+
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="dataNascimento">Data de Nascimento</label>
+          <input type="date" class="form-control" id="dataNascimento" formControlName="dataNascimento">
+        </div>
+
+        @if(id){
+        <div class="form-group">
+          <label for="dataCadastro">Data de Cadastro</label>
+          <input type="datetime-local" class="form-control" id="dataCadastro" formControlName="dataCadastro">
+        </div>
+        }
+
+        <div class="form-group">
+          <label for="plano">Plano</label>
+          <select class="form-control" id="plano" formControlName="planoId">
+            <option value="">Selecione um plano</option>
+            @for(plano of planos; track plano.id){
+            <option [value]="plano.id">
+              {{ plano.nome }}
+            </option>
+            }
+
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select class="form-control" id="status" formControlName="status">
+            <option value="ATIVO">ATIVO</option>
+            <option value="INATIVO">INATIVO</option>
+          </select>
+        </div>
+        <div class="buttons d-flex justify-content-end align-item-center">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid || form.pristine" id="submit">
+            Salvar
+          </button>
+          <button class="btn btn-secondary" [disabled]="form.pristine" (click)="onCancel()" type="button" id="cancel">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</app-page>
