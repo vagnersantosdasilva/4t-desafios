@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 export class BeneficiariosPage implements OnInit {
 
   public beneficiarios: { headers: TableColumn[]; data: TableDataRow[] };
-  public planosSelectOptions :SelectOption[] = [];
-  public statusSelectOptions :SelectOption[] = [
+  public planosSelectOptions: SelectOption[] = [];
+  public statusSelectOptions: SelectOption[] = [
     { id: 1, value: 'TODOS', label: 'Todos' },
     { id: 2, value: 'ATIVO', label: 'Ativo' },
     { id: 3, value: 'INATIVO', label: 'Inativo' },
@@ -70,17 +70,20 @@ export class BeneficiariosPage implements OnInit {
     this.router.navigate(['/beneficiarios/novo']);
   }
 
-  public filterPlano(option: number|string): void {
+  public filterPlano(option: number | string): void {
     console.log('Filter by plan:', option);
-    this.beneficiariosArgs.plano_id = option as number;
+    if (option && option.toString().length == 0) {
+      delete this.beneficiariosArgs.plano_id;
+    }
+    else { this.beneficiariosArgs.plano_id = option as number; }
     this.loadBeneficiarios();
   }
 
-  public filterStatus(option: number|string): void {
+  public filterStatus(option: number | string): void {
     console.log('Filter by status:', option);
-    if(option === 'TODOS'){
+    if (option === 'TODOS' || option .toString().length === 0) {
       delete this.beneficiariosArgs.status;
-    }else{
+    } else {
       this.beneficiariosArgs.status = option as 'ATIVO' | 'INATIVO';
     }
     this.loadBeneficiarios();
@@ -110,7 +113,7 @@ export class BeneficiariosPage implements OnInit {
 
   public confirmRemoveBeneficiario(): void {
     // Lógica para confirmar a remoção do beneficiário
-    if (this.beneficiarioSelected !=null) {
+    if (this.beneficiarioSelected != null) {
       this.beneficiariosService.deleteBeneficiario(this.beneficiarioSelected['id'] as number).subscribe({
         next: () => {
           console.log('Beneficiário removido com sucesso.');
