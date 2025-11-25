@@ -6,7 +6,7 @@
           <label for="nome">Nome do plano</label>
           <input type="text" class="form-control"
             [class.is-invalid]="form.get('nome')?.touched && form.get('nome')?.invalid"
-            id="nome" formControlName="nome" placeholder="Digite seu nome completo">
+            id="nome" formControlName="nome" placeholder="Digite o nome plano">
 
           @if(form.get('nome')?.touched && form.get('nome')?.invalid){
           <div class="invalid-feedback">

@@ -26,31 +26,18 @@ export class ControlTable {
 
 
   public buttonControlAction(): void {
-    console.log('Button control action clicked');
     this.buttonControlActionClicked.emit();
   }
 
   public primarySelectChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
-    const selectedId = selectElement.options[selectElement.selectedIndex].id;
-
-    console.log('primeiro select alterado:', {
-      value: selectedValue,
-      id: selectedId
-    });
     this.primarySelectChanged.emit(selectedValue);
   }
 
   public secondSelectChange(event:Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
-    const selectedId = selectElement.options[selectElement.selectedIndex].id;
-
-    console.log('Segundo select alterado:', {
-      value: selectedValue,
-      id: selectedId
-    });
     this.secondSelectChanged.emit(selectedValue);
   }
 }

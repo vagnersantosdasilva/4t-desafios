@@ -254,11 +254,11 @@ describe('PlanosFormPage', () => {
       fixture.detectChanges();
     });
 
-    fit('should create', () => {
+    it('should create', () => {
       expect(component).toBeTruthy();
     });
 
-    fit('sould populate form when editing', () => {
+    it('sould populate form when editing', () => {
       component.ngOnInit();
       fixture.detectChanges();
 
@@ -266,7 +266,7 @@ describe('PlanosFormPage', () => {
       expect(component.form.value.codigoRegistroAns).toBe(mockPlano.codigo_registro_ans);
     });
 
-    fit('should call updatePlano when submitting edited Plano', async () => {
+    it('should call updatePlano when submitting edited Plano', async () => {
       const nome = fixture.nativeElement.querySelector('#nome');
       nome.value = mockPlano.nome;
       nome.dispatchEvent(new Event('input'));
