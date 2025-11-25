@@ -20,7 +20,7 @@ export interface TableModel {
 }
 
 export interface SelectOption {
-  id: number | string;
+  id: number | string | null;
   value: string | number;
   label: string;
   selected?: boolean;

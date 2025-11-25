@@ -50,7 +50,7 @@ export class BeneficiariosPage implements OnInit {
         id: plano.id,
         value: plano.id,
         label: plano.nome
-      }));
+      } as SelectOption));
     });
   }
 

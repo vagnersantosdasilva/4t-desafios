@@ -25,4 +25,8 @@ export class PlanosService {
   public deletePlano(id:number):Observable<void> {
     return this.httpCliente.delete<void>(`${this.api}/planos/${id}`);
   }
+
+  public getPlanoById(id:number):Observable<Plano> {
+    return this.httpCliente.get<Plano>(`${this.api}/planos/${id}`);
+  }
 }

@@ -1,5 +1,5 @@
 export interface Plano {
-  id: number;
+  id: number | null;
   nome: string;
   codigo_registro_ans: string;
 }

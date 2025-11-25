@@ -1,4 +1,62 @@
-<app-page  title="Planos">
-  <p>planos-form-page works!</p>
-</app-page>
+<app-page [title]="titleForm">
+  <div class="card bg-dark">
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nome">Nome do plano</label>
+          <input type="text" class="form-control"
+            [class.is-invalid]="form.get('nome')?.touched && form.get('nome')?.invalid"
+            id="nome" formControlName="nome" placeholder="Digite seu nome completo">
 
+          @if(form.get('nome')?.touched && form.get('nome')?.invalid){
+          <div class="invalid-feedback">
+            @if(form.get('nome')?.errors?.['required']){
+            <div>
+              O nome completo é obrigatório.
+            </div>
+            }
+            @if(form.get('nome')?.errors?.['minlength']){
+            <div>
+              O nome deve ter no mínimo {{ form.get('nome')?.errors?.['minlength']?.requiredLength }}
+              caracteres.
+            </div>
+            }
+
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="codigoRegistroAns">Código de registro ANS</label>
+          <input type="text" class="form-control" id="codigoRegistroAns" formControlName="codigoRegistroAns" placeholder="Digite seu código de registro ANS"
+            [class.is-invalid]="form.get('codigoRegistroAns')?.touched && form.get('codigoRegistroAns')?.invalid">
+          @if(form.get('codigoRegistroAns')?.touched && form.get('codigoRegistroAns')?.invalid){
+          <div class="invalid-feedback">
+            @if(form.get('codigoRegistroAns')?.errors?.['required']){
+            <div>
+              O codigoRegistroAns é obrigatório.
+            </div>
+            }
+            @if(form.get('codigoRegistroAns')?.errors?.['codigoRegistroAns']){
+            <div>
+              O Código de registro ANS é inválido.
+            </div>
+            }
+          </div>
+
+          }
+        </div>
+
+        <div class="buttons d-flex justify-content-end align-item-center">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid || form.pristine" id="submit">
+            Salvar
+          </button>
+          <button class="btn btn-secondary" [disabled]="form.pristine" (click)="onCancel()" type="button" id="cancel">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</app-page>

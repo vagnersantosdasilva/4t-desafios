@@ -1,4 +1,5 @@
-@use 'variables' as *;
+@use 'sass:color';
+@use 'variables'as *;
 
 :host {
   margin: 0;
@@ -38,11 +39,38 @@
     border-radius: 0;
   }
 
-  select,
-  input {
-    border-radius: 0;
-    width: 100%;
-    min-width: 10rem;
+
+  input,
+  select {
+    background: color.scale($bg-card, $lightness: -5%);
+    border: 1px solid color.scale($bg-card, $lightness: 15%);
+    border-radius: $radius-md;
+    padding: $space-sm $space-md;
+    height: 42px;
+    color: #fff;
+    font-size: $font-size-base;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    min-width: 15rem;
+    &::placeholder {
+      color: color.scale($text-color-light, $lightness: -40%);
+      opacity: 0.8;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: color.scale($color-light, $lightness: 20%);
+      box-shadow: 0 0 0 2px color.scale($color-light, $lightness: 35%);
+    }
+  }
+
+  // Dropdown específico
+  select {
+    cursor: pointer;
+    appearance: none; // Remove seta default (opcional)
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ccc' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-md center;
+    background-size: 14px;
   }
 
   .form-group {
