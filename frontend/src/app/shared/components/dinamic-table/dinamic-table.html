@@ -1,16 +1,8 @@
 <div>
-  <app-control-table
-    class="mb-1"
-    [buttonControlLabel]="buttonActionLabel"
-    (buttonControlActionClicked)="buttonAction()"
-    [primarySelectOptions]="selectPrimaryControlOptions"
-    [secondSelectOptions]="selectSecondaryControlOptions"
-    (primarySelectChanged)="primarySelectChange($event)"
-    (secondSelectChanged)="secondarySelectChange($event)"
-    [primarySelectLabel]="primarySelectLabel"
-    [secondSelectLabel]="secondarySelectLabel"
-
-  ></app-control-table>
+  <app-control-table class="mb-1" [buttonControlLabel]="buttonActionLabel" (buttonControlActionClicked)="buttonAction()"
+    [primarySelectOptions]="selectPrimaryControlOptions" [secondSelectOptions]="selectSecondaryControlOptions"
+    (primarySelectChanged)="primarySelectChange($event)" (secondSelectChanged)="secondarySelectChange($event)"
+    [primarySelectLabel]="primarySelectLabel" [secondSelectLabel]="secondarySelectLabel"></app-control-table>
 
   <div>
     <div class="card bg-dark text-white mt-1">
@@ -46,8 +38,9 @@
             </tr>
             }@empty {
             <tr>
-              <td [attr.colspan]="tableHeaders.length || 1" class="text-center p-4 text-white">
-                {{messageEmptyTable}}
+              <!-- Somar headers + 2 colunas de ação -->
+              <td [attr.colspan]="(tableHeaders.length || 1) + 2" class="text-center p-4 text-white">
+                {{ messageEmptyTable }}
               </td>
             </tr>
             }

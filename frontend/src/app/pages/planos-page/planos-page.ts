@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { TableColumn, TableDataRow } from '../../shared/models/table.model';
 import { PlanosService } from '../../services/planos/planos';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-planos-page',
@@ -17,6 +18,7 @@ export class PlanosPage implements OnInit {
   private planosService = inject(PlanosService);
   private router = inject(Router);
   private planoSelected: TableDataRow | null = null;
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.planosTable.headers = [
@@ -44,7 +46,9 @@ export class PlanosPage implements OnInit {
 
   public confirmRemovePlano(): void {
     if (this.planoSelected != null) {
-      this.planosService.deletePlano(this.planoSelected['id'] as number).subscribe({
+      this.planosService.deletePlano(this.planoSelected['id'] as number)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
         next: () => {
           this.loadPlanos();
         },
@@ -63,12 +67,22 @@ export class PlanosPage implements OnInit {
   }
 
   private loadPlanos(): void {
-    this.planosService.getPlanos().subscribe((planos) => {
-      this.planosTable.data = planos.map((plano) => ({
-        id: plano.id,
-        nome: plano.nome,
-        codigo_registro_ans: plano.codigo_registro_ans,
-      }));
-    });
+    this.planosService.getPlanos()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(
+      {
+        next: (planos) => {
+          this.planosTable.data = planos.map((plano) => ({
+            id: plano.id,
+            nome: plano.nome,
+            codigo_registro_ans: plano.codigo_registro_ans,
+          }));
+        },
+        error: (err) => {
+          alert('Erro ao carregar os planos: ' + err);
+        }
+      }
+    );
   }
+
 }

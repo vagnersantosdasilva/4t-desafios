@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { SelectOption, TableColumn, TableDataRow } from '../../shared/models/table.model';
 import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
 import { PlanosService } from '../../services/planos/planos';
 import { BeneficiarioArgs } from '../../model/api.model';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-beneficiarios-page',
@@ -27,6 +28,9 @@ export class BeneficiariosPage implements OnInit {
   private planosService = inject(PlanosService);
   private router = inject(Router);
   private beneficiariosArgs: BeneficiarioArgs = {}
+
+  private destroyRef = inject(DestroyRef);
+
   constructor() {
     this.beneficiarios = { headers: [], data: [] };
   }
@@ -45,13 +49,21 @@ export class BeneficiariosPage implements OnInit {
     this.beneficiarios.data = [];
     this.loadBeneficiarios();
 
-    this.planosService.getPlanos().subscribe((planos) => {
-      this.planosSelectOptions = planos.map((plano) => ({
-        id: plano.id,
-        value: plano.id,
-        label: plano.nome
-      } as SelectOption));
-    });
+    this.planosService.getPlanos()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (planos) => {
+          this.planosSelectOptions = planos.map((plano) => ({
+            id: plano.id,
+            value: plano.id,
+            label: plano.nome
+          } as SelectOption));
+        },
+        error: (error) => {
+          console.error('Erro ao carregar planos');
+          alert('Erro ao carregar planos: ' + error.message);
+        }
+      });
   }
 
   public editBeneficiario(row: TableDataRow): void {
@@ -71,17 +83,22 @@ export class BeneficiariosPage implements OnInit {
   }
 
   public filterPlano(option: number | string): void {
+
     console.log('Filter by plan:', option);
-    if (option && option.toString().length == 0) {
+    const isFilterEmpty = option === 0 || option === '' || option === null || option === undefined;
+
+    if (isFilterEmpty) {
       delete this.beneficiariosArgs.plano_id;
     }
-    else { this.beneficiariosArgs.plano_id = option as number; }
+    else {
+      this.beneficiariosArgs.plano_id = Number(option);
+    }
     this.loadBeneficiarios();
   }
 
   public filterStatus(option: number | string): void {
     console.log('Filter by status:', option);
-    if (option === 'TODOS' || option .toString().length === 0) {
+    if (option === 'TODOS' || option.toString().length === 0) {
       delete this.beneficiariosArgs.status;
     } else {
       this.beneficiariosArgs.status = option as 'ATIVO' | 'INATIVO';
@@ -91,24 +108,26 @@ export class BeneficiariosPage implements OnInit {
 
   private loadBeneficiarios(): void {
 
-    this.beneficiariosService.getBeneficiarios(this.beneficiariosArgs).subscribe({
-      next: (beneficiarios) => {
-        this.beneficiarios.data = beneficiarios.map(beneficiario => ({
-          id: beneficiario.id,
-          nome_completo: beneficiario.nome_completo,
-          cpf: beneficiario.cpf,
-          data_nascimento: beneficiario.data_nascimento,
-          status: beneficiario.status,
-          plano: beneficiario.plano.nome,
-          data_cadastro: beneficiario.data_cadastro
-        }));
+    this.beneficiariosService.getBeneficiarios(this.beneficiariosArgs)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (beneficiarios) => {
+          this.beneficiarios.data = beneficiarios.map(beneficiario => ({
+            id: beneficiario.id,
+            nome_completo: beneficiario.nome_completo,
+            cpf: beneficiario.cpf,
+            data_nascimento: beneficiario.data_nascimento,
+            status: beneficiario.status,
+            plano: beneficiario.plano.nome,
+            data_cadastro: beneficiario.data_cadastro
+          }));
 
-      },
-      error: (error) => {
-        console.error('Erro ao carregar beneficiários:', error);
-        // Aqui você pode adicionar tratamento de erro (ex: mostrar mensagem para o usuário)
-      }
-    });
+        },
+        error: (error) => {
+          console.error('Erro ao carregar beneficiários:', error);
+          alert('Erro ao carregar beneficiários: ' + error);
+        }
+      });
   }
 
   public confirmRemoveBeneficiario(): void {

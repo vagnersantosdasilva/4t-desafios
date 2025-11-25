@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
 import { PlanosService } from '../../services/planos/planos';
 import { Beneficiario, Plano } from '../../model/api.model';
 import { cpfValidator } from '../../shared/validators/cpf.validator';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-beneficiarios-form-page',
@@ -34,7 +35,7 @@ export class BeneficiariosFormPage implements OnInit {
     status: 'ATIVO',
     data_cadastro: '',
   }
-
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -49,7 +50,7 @@ export class BeneficiariosFormPage implements OnInit {
 
   public onSubmit(): void {
     if (this.form.valid) {
-      const beneficiarioData: Beneficiario  = {
+      const beneficiarioData: Beneficiario = {
         id: this.id ? this.id : null,
         nome_completo: this.form.value.nomeCompleto,
         cpf: this.form.value.cpf,
@@ -59,34 +60,54 @@ export class BeneficiariosFormPage implements OnInit {
         data_cadastro: this.id && this.form.value.dataCadastro ? this.form.value.dataCadastro : new Date().toISOString(),
       };
       if (this.id) {
-        this.beneficiariosService.updateBeneficiario(beneficiarioData).subscribe(() => {
-          alert('Beneficiário atualizado com sucesso!');
-          this.router.navigate(['/beneficiarios']);
-        });
-      }else {
-        this.beneficiariosService.saveBeneficiario(beneficiarioData).subscribe(() => {
-          alert('Beneficiário cadastrado com sucesso!');
-          this.router.navigate(['/beneficiarios']);
-
-        });
+        this.beneficiariosService.updateBeneficiario(beneficiarioData)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              alert('Beneficiário atualizado com sucesso!');
+              this.router.navigate(['/beneficiarios']);
+            },
+            error: (err) => {
+              alert('Erro ao atualizar o beneficiário: ');
+              console.log('Erro ao atualizar o beneficiário: ' + err.message);
+            }
+          });
+      } else {
+        this.beneficiariosService.saveBeneficiario(beneficiarioData)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              alert('Beneficiário cadastrado com sucesso!');
+              this.router.navigate(['/beneficiarios']);
+            },
+            error: (err) => {
+              alert('Erro ao cadastrar o beneficiário: ');
+              console.log('Erro ao cadastrar o beneficiário: ' +err.message);
+            }
+          });
       }
     }
-
-
   }
 
-  private loadBeneficiario(id:number): void {
+  private loadBeneficiario(id: number): void {
     this.beneficiariosService.getBeneficiariosById(id)
-      .subscribe((beneficiario) => {
-        this.beneficiarioSelected = { ...beneficiario }
-        this.form.patchValue({
-          nomeCompleto: beneficiario.nome_completo,
-          cpf: beneficiario.cpf,
-          dataNascimento: beneficiario.data_nascimento,
-          planoId: beneficiario.plano_id,
-          status: beneficiario.status,
-          dataCadastro: beneficiario.data_cadastro ? beneficiario.data_cadastro.substring(0, 16) : '',
-        });
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (beneficiario) => {
+          this.beneficiarioSelected = { ...beneficiario }
+          this.form.patchValue({
+            nomeCompleto: beneficiario.nome_completo,
+            cpf: beneficiario.cpf,
+            dataNascimento: beneficiario.data_nascimento,
+            planoId: beneficiario.plano_id,
+            status: beneficiario.status,
+            dataCadastro: beneficiario.data_cadastro ? beneficiario.data_cadastro.substring(0, 16) : '',
+          });
+        },
+        error:(err) =>{
+          alert('Erro ao carregar beneficiário');
+          console.log('Erro ao carregar beneficiario :' +err.message);
+        }
       });
   }
 
@@ -109,9 +130,19 @@ export class BeneficiariosFormPage implements OnInit {
   }
 
   private loadPlanos(): void {
-    this.planosService.getPlanos().subscribe((response) => {
-      this.planos = [...response];
-    });
+    this.planosService.getPlanos()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
+        {
+          next: (response) => {
+            this.planos = [...response];
+          },
+          error: (err) => {
+            alert('Erro ao carregar os planos: ');
+            console.log(err.message);
+          }
+        }
+      );
   }
 
   public onCancel(): void {
