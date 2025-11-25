@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PlanosService } from '../../services/planos/planos';
+import { PlanosService } from '../../../services/planos/planos';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Plano } from '../../model/api.model';
+import { Plano } from '../../../model/api.model';
 
 describe('PlanosFormPage', () => {
 

@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, DestroyRef } from '@angular/core';
-import { SelectOption, TableColumn, TableDataRow } from '../../shared/models/table.model';
-import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
-import { PlanosService } from '../../services/planos/planos';
-import { BeneficiarioArgs } from '../../model/api.model';
+import { SelectOption, TableColumn, TableDataRow } from '../../../shared/models/table.model';
+import { BeneficiariosService } from '../../../services/beneficiarios/beneficiarios';
+import { PlanosService } from '../../../services/planos/planos';
+import { BeneficiarioArgs } from '../../../model/api.model';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -84,7 +84,6 @@ export class BeneficiariosPage implements OnInit {
 
   public filterPlano(option: number | string): void {
 
-    console.log('Filter by plan:', option);
     const isFilterEmpty = option === 0 || option === '' || option === null || option === undefined;
 
     if (isFilterEmpty) {

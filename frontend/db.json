@@ -34,11 +34,6 @@
       "id": 3,
       "nome": "Plano Ouro",
       "codigo_registro_ans": "ANS-100003"
-    },
-    {
-      "id": 4,
-      "nome": "Plano Cobre",
-      "codigo_registro_ans": "ANS-100004"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Plano } from '../../model/api.model';
+import { Plano } from '../../../model/api.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PlanosService } from '../../services/planos/planos';
+import { PlanosService } from '../../../services/planos/planos';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

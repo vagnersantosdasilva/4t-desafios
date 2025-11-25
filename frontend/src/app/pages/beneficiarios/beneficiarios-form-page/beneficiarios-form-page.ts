@@ -1,10 +1,10 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
-import { PlanosService } from '../../services/planos/planos';
-import { Beneficiario, Plano } from '../../model/api.model';
-import { cpfValidator } from '../../shared/validators/cpf.validator';
+import { BeneficiariosService } from '../../../services/beneficiarios/beneficiarios';
+import { PlanosService } from '../../../services/planos/planos';
+import { Beneficiario, Plano } from '../../../model/api.model';
+import { cpfValidator } from '../../../shared/validators/cpf.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

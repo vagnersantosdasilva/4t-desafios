@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BeneficiariosFormPage } from './beneficiarios-form-page';
 import { of } from 'rxjs';
-import { Beneficiario } from '../../model/api.model';
+import { Beneficiario } from '../../../model/api.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
-import { BeneficiariosService } from '../../services/beneficiarios/beneficiarios';
-import { PlanosService } from '../../services/planos/planos';
+import { BeneficiariosService } from '../../../services/beneficiarios/beneficiarios';
+import { PlanosService } from '../../../services/planos/planos';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { TableColumn, TableDataRow } from '../../shared/models/table.model';
-import { PlanosService } from '../../services/planos/planos';
+import { TableColumn, TableDataRow } from '../../../shared/models/table.model';
+import { PlanosService } from '../../../services/planos/planos';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
