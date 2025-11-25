@@ -9,3 +9,14 @@
   >
   </app-dinamic-table>
 </app-page>
+<app-dialog
+  message="Tem certeza que deseja remover este plano?"
+  primaryButtonLabel="Remover"
+  secondaryButtonLabel="Cancelar"
+  (primaryButtonCliked)="confirmRemovePlano()"
+  (secondaryButtonClicked)="cancelRemovePlano()"
+  [visible]="dialogVisible"
+  dialogTitle='Remoção de Plano'
+>
+</app-dialog>
+
