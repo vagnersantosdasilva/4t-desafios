@@ -17,6 +17,15 @@
       "status": "INATIVO",
       "plano_id": 3,
       "data_cadastro": "2025-03-20T12:45:00Z"
+    },
+    {
+      "id": 4,
+      "nome_completo": "aaa",
+      "cpf": "095.915.257-10",
+      "data_nascimento": "0011-11-11",
+      "plano_id": "1",
+      "status": "INATIVO",
+      "data_cadastro": "2025-11-25T22:39:47.680Z"
     }
   ],
   "planos": [

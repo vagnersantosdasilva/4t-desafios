@@ -6,6 +6,7 @@ import { PlanosService } from '../../../services/planos/planos';
 import { Beneficiario, Plano } from '../../../model/api.model';
 import { cpfValidator } from '../../../shared/validators/cpf.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { dateValidator } from '../../../shared/validators/date.validator';
 
 @Component({
   selector: 'app-beneficiarios-form-page',
@@ -116,14 +117,14 @@ export class BeneficiariosFormPage implements OnInit {
     let formConfig: any = {
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
       cpf: ['', [Validators.required, cpfValidator]],
-      dataNascimento: ['', Validators.required],
+      dataNascimento: ['', [Validators.required, dateValidator]],
       planoId: ['', Validators.required],
       status: ['ATIVO', Validators.required],
     };
 
     // Adiciona campo dataCadastro apenas se for edição
     if (this.id) {
-      formConfig.dataCadastro = ['', Validators.required];
+      formConfig.dataCadastro = ['', [Validators.required, dateValidator]];
     }
 
     this.form = this.formBuilder.group(formConfig);
