@@ -1,59 +1,94 @@
-# DesafioFrontend
+# Desafio Frontend - CRUD de Beneficiários e Planos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+Este projeto foi desenvolvido como parte de um desafio técnico frontend, implementando um sistema CRUD (Create, Read, Update, Delete) para gerenciamento de beneficiários e planos utilizando Angular.
 
-## Development server
+## 📋 Descrição do Projeto
 
-To start a local development server, run:
+A aplicação consiste em um sistema para cadastro e gestão de beneficiários e seus respectivos planos. A arquitetura foi pensada buscando garantir modularidade e reutilização de componentes.
 
+### 🏗️ Estrutura do Projeto
+
+- **`shared/`**: Contém componentes reutilizáveis que podem ser utilizados em diferentes partes da aplicação
+- **`pages/`**: Contém os componentes de alto nível que representam as páginas principais da aplicação
+- **`services/`**: Os serviços que fazem conexão com o backend
+- **`models/`**: Interfaces que modelam os dados permitindo a integração com o backend
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+- Node.js (versão 20 )
+- npm ou yarn
+- json-server (instalado globalmente)
+
+### Instalação das Dependências
+
+```bash
+npm install
+```
+
+### Execução da Aplicação
+
+1. **Iniciar o JSON Server (Backend Mock):**
+```bash
+json-server --watch db.json --port 3000 --foreignKeySuffix _id
+```
+
+2. **Em outro terminal, iniciar a aplicação Angular:**
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+3. **Acessar a aplicação:**
+Abra seu navegador e navegue para `http://localhost:4200/`
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Servidor de Desenvolvimento
 ```bash
-ng generate component component-name
+ng serve
 ```
+A aplicação será recarregada automaticamente a cada alteração nos arquivos fonte.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Build do Projeto
+```bash
+ng build
+```
+Compila o projeto e armazena os artefatos na pasta `dist/`. A build de produção é otimizada para performance.
 
+### Executar Testes Unitários
+```bash
+ng test
+```
+Executa os testes unitários via [Karma](https://karma-runner.github.io).
+
+### Scaffolding de Código
+```bash
+ng generate component nome-do-componente
+```
+Para ver a lista completa de schematics disponíveis:
 ```bash
 ng generate --help
 ```
 
-## Building
+## 📦 Dependências Principais
 
-To build the project run:
+- **Angular 20.0.0** - Framework principal
+- **Bootstrap 5.3.8** - Framework CSS para estilização
+- **Bootstrap Icons 1.13.1** - Biblioteca de ícones
+- **RxJS 7.8.0** - Programação reativa
 
-```bash
-ng build
-```
+## 🎯 Funcionalidades
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- ✅ Cadastro de beneficiários
+- ✅ Cadastro de planos
+- ✅ Operações CRUD completas
+- ✅ Interface com Bootstrap
+- ✅ Arquitetura modular e componentes reutilizáveis
 
-## Running unit tests
+## 🔗 URLs da Aplicação
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Aplicação Frontend**: `http://localhost:4200/`
+- **API JSON Server**: `http://localhost:3000/`
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
+Para mais informações sobre Angular CLI, visite [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
