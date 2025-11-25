@@ -10,6 +10,7 @@ import { PlanosService } from '../../../services/planos/planos';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Page } from '../../../shared/components/page/page';
 
 describe('BeneficiariosFormPage', () => {
 
@@ -279,12 +280,12 @@ describe('BeneficiariosFormPage', () => {
   describe('When editing existing beneficiario', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [BeneficiariosFormPage],
+        declarations: [BeneficiariosFormPage, Page],
         imports: [
           RouterTestingModule.withRoutes([
             { path: 'beneficiarios', component: {} as any },
           ]),
-          MockAppPage,
+
           ReactiveFormsModule
         ],
         providers: [
@@ -300,6 +301,10 @@ describe('BeneficiariosFormPage', () => {
             provide: ActivatedRoute,
             useValue: mockActivatedRouteWithId,
           },
+          {
+            provide: Router,
+            useValue: mockRouter,
+          }
         ],
       })
         .compileComponents();
@@ -331,6 +336,10 @@ describe('BeneficiariosFormPage', () => {
       nome.dispatchEvent(new Event('input'));
 
       fixture.detectChanges();
+
+      console.log('valido:', component.form.valid);
+      console.log('form:', component.form.value);
+      console.log('errors:', component.form.errors);
 
       const saveButton = fixture.nativeElement.querySelector('button[type="submit"]');
 
