@@ -2,13 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Beneficiario, BeneficiarioArgs, BeneficiarioExpanded } from './../../model/api.model';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class BeneficiariosService {
   private httpCliente = inject(HttpClient);
-  private api = 'http://localhost:3000';
+  private api = environment.apiurl
 
   public getBeneficiarios(beneficiarioArgs?: BeneficiarioArgs): Observable<BeneficiarioExpanded[]> {
 
