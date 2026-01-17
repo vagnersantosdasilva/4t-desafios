@@ -7,6 +7,7 @@ import { DinamicTable } from './components/dinamic-table/dinamic-table';
 import { Page } from './components/page/page';
 import { Header } from './components/header/header';
 import { RouterModule } from '@angular/router';
+import { Toast } from './components/toast/toast';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     DinamicTable,
     Header,
     Page,
+    Toast,
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { RouterModule } from '@angular/router';
     Header,
     Page,
     CommonModule,
-    RouterModule
+    RouterModule,
+    Toast
   ]
 })
 export class SharedModule { }

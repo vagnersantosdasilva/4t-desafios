@@ -3,6 +3,7 @@ import { TableColumn, TableDataRow } from '../../../shared/models/table.model';
 import { PlanosService } from '../../../services/planos/planos';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-planos-page',
@@ -19,6 +20,7 @@ export class PlanosPage implements OnInit {
   private router = inject(Router);
   private planoSelected: TableDataRow | null = null;
   private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.planosTable.headers = [
@@ -50,10 +52,11 @@ export class PlanosPage implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
+          this.toastService.success('Plano removido com sucesso!');
           this.loadPlanos();
         },
-        error: (err) => {
-          alert('Erro ao remover o plano: ' + err);
+        error: () => {
+          this.toastService.error('Erro ao remover o plano. Tente mais tarde ');
         }
       });
     };

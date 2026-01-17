@@ -1,8 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { Plano } from '../../../model/api.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanosService } from '../../../services/planos/planos';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from '../../../shared/services/toast.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-planos-form-page',
@@ -28,6 +30,8 @@ public titleForm: string = 'Novo Beneficiário';
     nome: '',
     codigo_registro_ans: ''
   }
+  private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -46,15 +50,18 @@ public titleForm: string = 'Novo Beneficiário';
         codigo_registro_ans: this.form.value.codigoRegistroAns
       };
       if (this.id) {
-        this.planosService.updatePlano(planoData).subscribe(() => {
-          alert('Plano atualizado com sucesso!');
+        this.planosService.updatePlano(planoData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.toastService.success('Plano atualizado com sucesso!');
           this.router.navigate(['/planos']);
         });
       }else {
-        this.planosService.savePlano(planoData).subscribe(() => {
-          alert('Plano cadastrado com sucesso!');
+        this.planosService.savePlano(planoData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.toastService.success('Plano cadastrado com sucesso!');
           this.router.navigate(['/planos']);
-
         });
       }
     }
@@ -64,6 +71,7 @@ public titleForm: string = 'Novo Beneficiário';
 
   private loadPlano(id:number): void {
     this.planosService.getPlanoById(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((plano) => {
         this.planoSelected = { ...plano }
         this.form.patchValue({

@@ -5,6 +5,7 @@ import { PlanosService } from '../../../services/planos/planos';
 import { BeneficiarioArgs } from '../../../model/api.model';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-beneficiarios-page',
@@ -30,6 +31,7 @@ export class BeneficiariosPage implements OnInit {
   private beneficiariosArgs: BeneficiarioArgs = {}
 
   private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
 
   constructor() {
     this.beneficiarios = { headers: [], data: [] };
@@ -60,8 +62,7 @@ export class BeneficiariosPage implements OnInit {
           } as SelectOption));
         },
         error: (error) => {
-          console.error('Erro ao carregar planos');
-          alert('Erro ao carregar planos: ' + error.message);
+          this.toastService.error('Erro ao carregar planos: ' + error.message);
         }
       });
   }
@@ -123,8 +124,7 @@ export class BeneficiariosPage implements OnInit {
 
         },
         error: (error) => {
-          console.error('Erro ao carregar beneficiários:', error);
-          alert('Erro ao carregar beneficiários: ' + error);
+          this.toastService.error('Erro ao carregar beneficiários: ' + error);
         }
       });
   }
@@ -134,8 +134,11 @@ export class BeneficiariosPage implements OnInit {
     if (this.beneficiarioSelected != null) {
       this.beneficiariosService.deleteBeneficiario(this.beneficiarioSelected['id'] as number).subscribe({
         next: () => {
-          console.log('Beneficiário removido com sucesso.');
           this.loadBeneficiarios();
+          this.toastService.success('Beneficiário removido com sucesso.');
+        },
+        error: () => {
+          this.toastService.error('Erro ao remover o beneficiário. Tente mais tarde.');
         }
       });
     };

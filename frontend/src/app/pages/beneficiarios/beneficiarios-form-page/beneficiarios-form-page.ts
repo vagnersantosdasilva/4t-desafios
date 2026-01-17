@@ -7,6 +7,8 @@ import { Beneficiario, Plano } from '../../../model/api.model';
 import { cpfValidator } from '../../../shared/validators/cpf.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { dateValidator } from '../../../shared/validators/date.validator';
+import { ToastService } from '../../../shared/services/toast.service';
+
 
 @Component({
   selector: 'app-beneficiarios-form-page',
@@ -37,6 +39,7 @@ export class BeneficiariosFormPage implements OnInit {
     data_cadastro: '',
   }
   private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -65,11 +68,11 @@ export class BeneficiariosFormPage implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => {
-              alert('Beneficiário atualizado com sucesso!');
+              this.toastService.success('Beneficiário atualizado com sucesso!');
               this.router.navigate(['/beneficiarios']);
             },
             error: (err) => {
-              alert('Erro ao atualizar o beneficiário: ');
+              this.toastService.error('Erro ao atualizar o beneficiário: ');
               console.log('Erro ao atualizar o beneficiário: ' + err.message);
             }
           });
@@ -78,11 +81,11 @@ export class BeneficiariosFormPage implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => {
-              alert('Beneficiário cadastrado com sucesso!');
+              this.toastService.success('Beneficiário cadastrado com sucesso!');
               this.router.navigate(['/beneficiarios']);
             },
             error: (err) => {
-              alert('Erro ao cadastrar o beneficiário: ');
+              this.toastService.error('Erro ao cadastrar o beneficiário: ');
               console.log('Erro ao cadastrar o beneficiário: ' +err.message);
             }
           });
@@ -106,7 +109,7 @@ export class BeneficiariosFormPage implements OnInit {
           });
         },
         error:(err) =>{
-          alert('Erro ao carregar beneficiário');
+          this.toastService.error('Erro ao carregar beneficiário');
           console.log('Erro ao carregar beneficiario :' +err.message);
         }
       });
@@ -139,7 +142,7 @@ export class BeneficiariosFormPage implements OnInit {
             this.planos = [...response];
           },
           error: (err) => {
-            alert('Erro ao carregar os planos: ');
+            this.toastService.error('Erro ao carregar os planos: ');
             console.log(err.message);
           }
         }

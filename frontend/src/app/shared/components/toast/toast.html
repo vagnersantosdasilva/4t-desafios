@@ -1,0 +1,18 @@
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200">
+
+  <div *ngFor="let toast of toastService.toasts$ | async" class="toast show mb-2" [ngClass]="{
+      'text-bg-success': toast.type === 'success',
+      'text-bg-warning': toast.type === 'warning',
+      'text-bg-danger': toast.type === 'error'
+    }">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toast.message }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="toastService.remove(toast.id)">
+      </button>
+    </div>
+  </div>
+
+</div>
+
