@@ -4,7 +4,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico frontend, implem
 
 ## 📋 Descrição do Projeto
 
-A aplicação consiste em um sistema para cadastro e gestão de beneficiários e seus respectivos planos. A arquitetura foi pensada buscando garantir modularidade e reutilização de componentes.
+A aplicação consiste em um sistema para cadastro e gestão de beneficiários e seus respectivos planos.Com o foco nas funcionalidades do frontend, a arquitetura foi pensada buscando garantir modularidade e reutilização de componentes.
 
 ### 🏗️ Estrutura do Projeto
 
@@ -12,15 +12,53 @@ A aplicação consiste em um sistema para cadastro e gestão de beneficiários e
 - **`pages/`**: Contém os componentes de alto nível que representam as páginas principais da aplicação
 - **`services/`**: Os serviços que fazem conexão com o backend
 - **`models/`**: Interfaces que modelam os dados permitindo a integração com o backend
+- **`environments`/**: configurações de desenvolvimento e producao.
 
 ## 🚀 Como Executar o Projeto
+Existem duas formas de rodar esse projeto, uma é executando com o docker e docker compose, a outra é utilizando localmente os recursos do angular cli ng ou npm
+
+## 🚀 Executar o projeto com docker (recomendado)
+
+Esta e a forma mais simples de rodar o projeto, pois o docker instalará todas as dependências (node 20 e json-server) automaticamente dentro de containers.
+
+### Pré-requisitos
+- docker
+- docker compose
+
+### Instalação e execução
+
+1. **clonar o repositorio:**
+```bash
+git clone https://github.com/vagnersantosdasilva/4t-desafios.git
+cd 4t-desafios/frontend
+```
+
+- Iniciar os containers: na raiz do projeto frontend, execute:
+
+```Bash
+docker-compose up
+```
+
+- O comando docker-compose up ja inicia o frontend com live reload e o backend mock simultaneamente.
+
+- Acessar a aplicacao:
+
+frontend: http://localhost:4200
+backend mock (api): http://localhost:3000
+
+
+
+## 🛠️ Executuar o projeto com ng (sem docker)
 
 ### Pré-requisitos
 - Node.js (versão 20 )
 - npm ou yarn
 - json-server (instalado globalmente)
+- Angular 20
 
 ### Instalação das Dependências
+
+- Depois de ter feito a clonagem do projeto, acesse a raíz do projeto frontend e execute o comando
 
 ```bash
 npm install
@@ -28,12 +66,12 @@ npm install
 
 ### Execução da Aplicação
 
-1. **Iniciar o JSON Server (Backend Mock):**
+1. **Na raiz do projeto Frontend, iniciar o JSON Server (Backend Mock):**
 ```bash
 json-server --watch db.json --port 3000 --foreignKeySuffix _id
 ```
 
-2. **Em outro terminal, iniciar a aplicação Angular:**
+2. **Ainda na raiz do projeto , em outro terminal, iniciar a aplicação Angular:**
 ```bash
 ng serve
 ```

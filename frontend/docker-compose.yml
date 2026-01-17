@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development # usa o estágio de desenvolvimento
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    image: node:20.19.3-alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./db.json:/data/db.json
+    working_dir: /data
+    # Instalamos o json-server globalmente e rodamos com seus parâmetros
+    command: sh -c "npm install -g json-server@0.17.4 && json-server --watch db.json --port 3000 --host 0.0.0.0 --foreignKeySuffix _id"
